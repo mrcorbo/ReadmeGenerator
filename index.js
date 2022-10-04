@@ -2,6 +2,36 @@ const inquirer = require('inquirer');
 const fs = require("fs");
 const { title } = require('process');
 
+const buildReadme = function (data){
+    return `# ${data.title}
+## Table of Contents
+- [Details](#details)
+- [Steps for Installation](#steps-for-installation)
+- [Benefits of the Project](#benefits-of-the-project)
+- [Licenses](#licenses)
+- [Test](#test)
+- [Contributors](#contributors)
+- [Contact Info](#contact-info)
+
+## Details
+${data.details}
+## Steps for Installation
+${data.install}
+## Benefits of the project
+${data.benefits}
+## Licenses
+${data.license}
+## Test
+${data.test}
+## Contributors
+${data.contributor}
+## Contact info
+**Github** - ${data.github}
+
+**Email** - ${data.email}
+`   
+}
+
 inquirer
     .prompt([
         {
@@ -51,7 +81,10 @@ inquirer
         }
 
     ]).then((data) => {
-        fs.writeFile("GeneratedReadme.md", JSON.stringify(data, null, '\t'), (err) => {
+        fs.writeFile("GeneratedReadme.md", buildReadme(data), (err) => {
             err ? console.log(err) : console.log("Success!")
         })
+        // fs.writeFile("GeneratedReadme.md", JSON.stringify(data, null, '\t'), (err) => {
+        //     err ? console.log(err) : console.log("Success!")
+        // })
     });
